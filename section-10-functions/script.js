@@ -53,7 +53,33 @@
 // newPassport(ammar);
 // checkIn(flight, ammar);
 
-
 //JavaScript dont have passing by reference only passing by value -> reference is still a value -> value that contain memory address
-//we pass (a reference) to function but we do not pass (by reference) 
+//we pass (a reference) to function but we do not pass (by reference)
 
+const oneWord = function (str) {
+  return str.replace(/ /g, "".toLowerCase());
+};
+
+const upperFirstWord = function (str) {
+  const [first, ...others] = str.split(" ");
+  return [first.toUpperCase(), ...others].join(" ");
+};
+
+//High-order function
+const transformer = function (str, fn) {
+  console.log(`original str : ${str}`);
+  console.log(`transformed str : ${fn(str)}`);
+  console.log(`transformed by ${fn.name}`);
+};
+
+transformer("JavaScript is the best !", oneWord);
+transformer("JavaScript is the best !", upperFirstWord);
+
+//JS uses callbacks all the time
+const high5 = function () {
+  console.log("👋🏻");
+};
+
+document.body.addEventListener("click", high5);
+
+["Jonas", "Martha", "Adam"].forEach(high5);
