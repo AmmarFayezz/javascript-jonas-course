@@ -83,3 +83,77 @@ const high5 = function () {
 document.body.addEventListener("click", high5);
 
 ["Jonas", "Martha", "Adam"].forEach(high5);
+
+//functions return functions
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greetHey = greet("Hey");
+greetHey("Ammar");
+
+//we can do this too
+greet("Hello")("Ammar");
+
+//rewrite with arrow function (challenge)
+const greets = (greetings) => (name) => console.log(`${greetings} ${name}`);
+
+greets("Hola")("Ammar");
+
+//the call and apply methods
+
+const lufthansa = {
+  airline: "lufthansa",
+  iataCode: "LH",
+  bookings: [],
+  //old
+  // book:function(){}
+  //new
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`,
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+lufthansa.book(234, "Ammar Fayez");
+lufthansa.book(543, "Jonas Schmedtmann");
+console.log(lufthansa);
+
+const eurowings = {
+  airline: "Eurowings",
+  iataCode: "EW",
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+//call method
+book.call(eurowings, 345, "Sara Williams");
+
+console.log(eurowings);
+
+const swiss = {
+  airline: "Swiss Air Lines",
+  iataCode: "LX",
+  bookings: [],
+};
+
+book.call(swiss, 2345, "Mary Cooper");
+console.log(swiss);
+
+//apply method is not used so much in new javaScript we could use spread ...flightData
+
+const flightData = [235, "George Cooper"];
+book.apply(swiss, flightData);
+
+console.log(swiss);
+
+book.call(swiss, ...flightData);
+
+//the bind method => don't call the function it return new function 
+
