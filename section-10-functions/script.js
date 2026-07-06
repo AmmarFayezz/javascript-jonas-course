@@ -256,7 +256,7 @@ const poll = {
 ${this.options.join("\n")}
 (Write option number)`);
 
-//if user press cancel 
+    //if user press cancel
     if (input === null) {
       return;
     }
@@ -302,3 +302,20 @@ poll.displayResults.call(
   },
   "string",
 );
+
+//Immediately Invoked Function Expressions (IIFE)
+//we need function that is only executed once and then never again
+
+(function () {
+  console.log("this function will never run again");
+})();
+
+(() => console.log("this also will never run again"))();
+
+
+{
+  const isPrivate=23
+  var notPrivate=44
+}
+// console.log(isPrivate); we don't have access to it (const - let )
+console.log(notPrivate);
