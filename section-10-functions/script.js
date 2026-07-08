@@ -385,7 +385,54 @@ const boardPassengers = function (n, waitTime) {
   console.log(`will start boarding in ${waitTime} seconds`);
 };
 
-//if we don't have perGroup in the function it will use this one 
-const perGroup=1000
+//if we don't have perGroup in the function it will use this one
+const perGroup = 1000;
 
-boardPassengers(180,3)
+boardPassengers(180, 3);
+
+/* Coding Challenge #2
+
+This is more of a thinking challenge than a coding challenge 🤓
+
+Your tasks:
+
+1. Take the IIFE below and at the end of the function, attach an event listener that
+changes the color of the selected h1 element ('header') to blue, each time
+the body element is clicked. Do not select the h1 element again!
+
+2. And now explain to yourself (or someone around you) why this worked! Take all
+the time you need. Think about when exactly the callback function is executed,
+and what that means for the variables involved in this example.
+
+GOOD LUCK 😀
+ */
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+
+  document.querySelector("body").addEventListener("click", function () {
+    header.style.color = "blue";
+  });
+})();
+
+
+//--> A closure allows a function to remember the variables from the scope where it was created, even after that scope has finished executing.
+
+
+/* ->Explaining
+
+We have an IIFE that executes immediately. Inside it, we select the <h1> element and store it in a variable called header, then we change its color to red.
+
+Still inside the IIFE, we attach a click event listener to the body. The callback function is created immediately, but it doesn’t execute until the user clicks the body.
+
+After the IIFE finishes, you might think the header variable is destroyed because it’s a local variable. However, JavaScript sees that the callback function still references header, so it keeps that variable alive in memory. This is called a closure.
+
+Later, when the body is clicked, the browser executes the callback function, and it can still access the header variable through the closure, so we can change the heading’s color without selecting it again.
+
+“Why doesn’t header disappear?”
+
+Because the event listener’s callback still has a reference to it. JavaScript doesn’t destroy variables that are still needed by another function.
+
+*/
+
