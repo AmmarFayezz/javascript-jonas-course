@@ -312,10 +312,80 @@ poll.displayResults.call(
 
 (() => console.log("this also will never run again"))();
 
-
 {
-  const isPrivate=23
-  var notPrivate=44
+  const isPrivate = 23;
+  var notPrivate = 44;
 }
 // console.log(isPrivate); we don't have access to it (const - let )
 console.log(notPrivate);
+
+//Closures
+//Closure make the function remember all the variables that existed at the function's birthplace essentially
+
+//A function that remembers the variables from the scope where it was created, even after that outer function has finished executing.
+
+const secureBooking = function () {
+  let passengerCount = 0;
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} Passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+//take look at the internal property (Backpack🎒)
+console.dir(booker);
+
+console.dir(booker);
+console.dir(booker);
+
+//More Closure Examples
+//Example 1
+
+let f;
+const g = function () {
+  const a = 22;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 33;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f();
+console.dir(f);
+
+//Re-assigning f function
+
+h();
+f();
+console.dir(f);
+
+//Example 2
+
+const boardPassengers = function (n, waitTime) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`we are now boarding all ${n} Passengers`);
+    console.log(`there are 3 groups, each with ${perGroup} Passengers `);
+  }, 1000);
+
+  console.log(`will start boarding in ${waitTime} seconds`);
+};
+
+//if we don't have perGroup in the function it will use this one 
+const perGroup=1000
+
+boardPassengers(180,3)
