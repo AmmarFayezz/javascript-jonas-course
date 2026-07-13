@@ -81,7 +81,7 @@ displayMovements(account1.movements);
 /////////////////////////////////////////////////
 // LECTURES
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -226,14 +226,35 @@ const checkDogs = function (dogsJulia, dogsKate) {
 
   allDogs.forEach(function (dogAge, i) {
     if (dogAge >= 3) {
-      console.log(`Dog number ${i+1} 🐶 is an adult, and is ${dogAge} years old`);
+      console.log(
+        `Dog number ${i + 1} 🐶 is an adult, and is ${dogAge} years old`,
+      );
     } else {
-      console.log(`Dog number ${i+1} is still a puppy 🐶`);
+      console.log(`Dog number ${i + 1} is still a puppy 🐶`);
     }
   });
 };
-checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 
-console.log("=================================================");
+// console.log("=================================================");
 
-checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+// checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+
+//Map Method
+const euroToUsd = 1.1;
+
+const movementsUSD = movements.map(function (mov) {
+  return mov * euroToUsd;
+  // return 23
+});
+console.log(movements);
+console.log(movementsUSD);
+
+//For -- Of
+const movementsUSDFor = [];
+
+for (const mov of movements) {
+  movementsUSDFor.push(mov * euroToUsd);
+}
+console.log(movementsUSDFor);
+
