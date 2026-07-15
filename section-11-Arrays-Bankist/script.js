@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+//DisplayMovements
 const displayMovements = function (movements) {
   containerMovements.innerHTML = "";
 
@@ -77,6 +78,22 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+//Create userNames
+const createUserNames = function (accounts) {
+  // we use for each to make side effect to manipulated the original array
+  accounts.forEach(function (account) {
+    account.userName = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+createUserNames(accounts);
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -213,27 +230,27 @@ Hints: Use tools from all lectures in this section so far 😉
 
 GOOD LUCK 😀 */
 
-const checkDogs = function (dogsJulia, dogsKate) {
-  // const dogsJuliaCorrected = dogsJulia.slice(1, -2);
-  const dogsJuliaCorrected = dogsJulia.slice();
-  dogsJuliaCorrected.splice(0, 1);
-  dogsJuliaCorrected.splice(-2);
-  // console.log(dogsJuliaCorrected);
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   // const dogsJuliaCorrected = dogsJulia.slice(1, -2);
+//   const dogsJuliaCorrected = dogsJulia.slice();
+//   dogsJuliaCorrected.splice(0, 1);
+//   dogsJuliaCorrected.splice(-2);
+//   // console.log(dogsJuliaCorrected);
 
-  const allDogs = dogsJuliaCorrected.concat(dogsKate);
-  // const allDogs=[...dogsJuliaCorrected,...dogsKate]
-  console.log(allDogs);
+//   const allDogs = dogsJuliaCorrected.concat(dogsKate);
+//   // const allDogs=[...dogsJuliaCorrected,...dogsKate]
+//   console.log(allDogs);
 
-  allDogs.forEach(function (dogAge, i) {
-    if (dogAge >= 3) {
-      console.log(
-        `Dog number ${i + 1} 🐶 is an adult, and is ${dogAge} years old`,
-      );
-    } else {
-      console.log(`Dog number ${i + 1} is still a puppy 🐶`);
-    }
-  });
-};
+//   allDogs.forEach(function (dogAge, i) {
+//     if (dogAge >= 3) {
+//       console.log(
+//         `Dog number ${i + 1} 🐶 is an adult, and is ${dogAge} years old`,
+//       );
+//     } else {
+//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+//     }
+//   });
+// };
 // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 
 // console.log("=================================================");
@@ -241,20 +258,58 @@ const checkDogs = function (dogsJulia, dogsKate) {
 // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 
 //Map Method
-const euroToUsd = 1.1;
+// const euroToUsd = 1.1;
 
-const movementsUSD = movements.map(function (mov) {
-  return mov * euroToUsd;
-  // return 23
+// const movementsUSD = movements.map(function (mov) {
+//   return mov * euroToUsd;
+//   // return 23
+// });
+
+//arrow function
+// const movementsUSD = movements.map((mov) => mov * euroToUsd);
+
+// console.log(movements);
+// console.log(movementsUSD);
+
+// //For -- Of
+// const movementsUSDFor = [];
+
+// for (const mov of movements) {
+//   movementsUSDFor.push(mov * euroToUsd);
+// }
+// console.log(movementsUSDFor);
+
+//old example
+
+//   if (mov > 0) {
+//     console.log(`Movement ${i + 1}: You deposited ${mov}`);
+//   } else {
+//     console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+//   }
+
+//ternary and map
+// const movementsDescriptions = movements.map(
+//   (mov, i) =>
+//     `Movement ${i + 1}: You ${mov > 0 ? "Deposited" : "Withdrew"} ${Math.abs(mov)}`,
+// );
+
+// console.log(movementsDescriptions);
+
+//filter Method
+
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
 });
-console.log(movements);
-console.log(movementsUSD);
 
-//For -- Of
-const movementsUSDFor = [];
+console.log(movements);
+console.log(deposits);
+
+const depositFor = [];
 
 for (const mov of movements) {
-  movementsUSDFor.push(mov * euroToUsd);
+  if (mov > 0) depositFor.push(mov);
 }
-console.log(movementsUSDFor);
+console.log(depositFor);
 
+const withdrawals = movements.filter((mov) => mov < 0);
+console.log(withdrawals);
