@@ -79,12 +79,37 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
-//Balance
+//Balances
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur);
   labelBalance.textContent = `${balance}€`;
 };
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    //New Rule From Bank
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 
 //Create userNames
 const createUserNames = function (accounts) {
@@ -264,7 +289,7 @@ Test data:
 
 GOOD LUCK 😀 */
 
-const calcAverageHumanAge = function (ages) {
+/* const calcAverageHumanAge = function (ages) {
   // const humanAges = ages.map((age) => {
   //   if (age <= 2) {
   //     return age * 2;
@@ -291,8 +316,49 @@ const calcAverageHumanAge = function (ages) {
 
 const avg1=calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const avg2=calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-console.log(avg1,avg2);
+console.log(avg1,avg2); */
 
+/////////////////////////////////////////
+//Coding Challenge #3
+
+/* Rewrite the 'calcAverageHumanAge' function from the 
+previous challenge, but this time as an arrow 
+function, and using chaining! 
+
+Test Data 1:[5, 2, 4, 1, 15, 8, 3]
+Test Data 2:[16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+
+const calcAverageHumanAge = (ages) =>
+  ages
+    .map((age) => (age <= 2 ? age * 2 : 16 + age * 4))
+    .filter((age) => age >= 18)
+    .reduce((acc, age,i,arr) => acc + age / arr.length, 0);
+
+const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log(avg1, avg2);
+
+const euroToUsd = 1.1;
+
+//PIPELINE
+const totalDeposit = movements
+  .filter((mov) => mov > 0)
+
+  //Check Errors
+
+  // .map((mov, i, arr) => {
+  //   console.log(arr);
+  //   return mov * euroToUsd;
+  // })
+
+  .map((mov) => mov * euroToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDeposit);
 
 // const checkDogs = function (dogsJulia, dogsKate) {
 //   // const dogsJuliaCorrected = dogsJulia.slice(1, -2);
