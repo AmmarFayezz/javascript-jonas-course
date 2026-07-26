@@ -80,9 +80,9 @@ const displayMovements = function (movements) {
 // displayMovements(account1.movements);
 
 //Balances
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, cur) => acc + cur);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, cur) => acc + cur);
+  labelBalance.textContent = `${acc.balance}€`;
 };
 // calcDisplayBalance(account1.movements);
 
@@ -125,11 +125,21 @@ const createUserNames = function (accounts) {
 
 createUserNames(accounts);
 
+//Updating UI
+
+const updateUI = function (acc) {
+  //Display Movements
+  displayMovements(acc.movements);
+  //Display Balance
+  calcDisplayBalance(acc);
+  //Display Summary
+  calcDisplaySummary(acc);
+};
 //Event handler
 let currentAccount;
 
 btnLogin.addEventListener("click", function (e) {
-  //Prevent Form from submitting
+  //Prevent Form from submitting (Refreshing the Page)
   e.preventDefault();
 
   currentAccount = accounts.find(
@@ -148,12 +158,8 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur();
 
-    //Display Movements
-    displayMovements(currentAccount.movements);
-    //Display Balance
-    calcDisplayBalance(currentAccount.movements);
-    //Display Summary
-    calcDisplaySummary(currentAccount);
+    //Update UI
+    updateUI(currentAccount);
   } else {
     // labelWelcome.style.color = "red";
     labelWelcome.textContent = "Incorrect username or PIN";
@@ -161,6 +167,32 @@ btnLogin.addEventListener("click", function (e) {
   }
 });
 
+//Transfer
+
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+
+  const receiverAcc = accounts.find(
+    (acc) => acc.userName === inputTransferTo.value,
+  );
+  inputTransferAmount.value = inputTransferTo.value = "";
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.userName !== currentAccount.userName
+  ) {
+    //Doing the Transfers add to receiver deduct from current
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
