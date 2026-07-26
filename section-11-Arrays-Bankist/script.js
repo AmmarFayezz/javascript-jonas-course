@@ -77,29 +77,29 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //Balances
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur);
   labelBalance.textContent = `${balance}€`;
 };
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov);
   labelSumIn.textContent = `${incomes}€`;
 
-  const out = movements
+  const out = acc.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov);
   labelSumOut.textContent = `${Math.abs(out)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter((mov) => mov > 0)
-    .map((deposit) => (deposit * 1.2) / 100)
+    .map((deposit) => (deposit * acc.interestRate) / 100)
     //New Rule From Bank
     .filter((int, i, arr) => {
       console.log(arr);
@@ -109,7 +109,7 @@ const calcDisplaySummary = function (movements) {
 
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 //Create userNames
 const createUserNames = function (accounts) {
@@ -124,7 +124,42 @@ const createUserNames = function (accounts) {
 };
 
 createUserNames(accounts);
-// console.log(accounts);
+
+//Event handler
+let currentAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  //Prevent Form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    (acc) => acc.userName === inputLoginUsername.value,
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    console.log("Login");
+
+    //Display UI and Welcome Message
+    labelWelcome.textContent = `Welcome Back, ${currentAccount.owner.split(" ")[0]}`;
+    containerApp.style.opacity = 1;
+
+    //Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.blur();
+
+    //Display Movements
+    displayMovements(currentAccount.movements);
+    //Display Balance
+    calcDisplayBalance(currentAccount.movements);
+    //Display Summary
+    calcDisplaySummary(currentAccount);
+  } else {
+    // labelWelcome.style.color = "red";
+    labelWelcome.textContent = "Incorrect username or PIN";
+    labelWelcome.classList.add("error");
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -487,11 +522,11 @@ console.log(firstWithdrawal);
 
 console.log(accounts);
 
-const account = accounts.find((acc) => (acc.owner === "Jonas Schmedtmann"));
+const account = accounts.find((acc) => acc.owner === "Jonas Schmedtmann");
 console.log(account);
 
 //for - of
 let accountt;
 for (const acc of accounts) {
-  if ((acc.owner === "Jonas Schmedtmann")) accountt = acc;
+  if (acc.owner === "Jonas Schmedtmann") accountt = acc;
 }
