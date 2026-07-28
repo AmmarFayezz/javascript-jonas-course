@@ -421,34 +421,34 @@ Test Data 2:[16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
-const calcAverageHumanAge = (ages) =>
-  ages
-    .map((age) => (age <= 2 ? age * 2 : 16 + age * 4))
-    .filter((age) => age >= 18)
-    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+// const calcAverageHumanAge = (ages) =>
+//   ages
+//     .map((age) => (age <= 2 ? age * 2 : 16 + age * 4))
+//     .filter((age) => age >= 18)
+//     .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
 
-const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+// const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
-console.log(avg1, avg2);
+// console.log(avg1, avg2);
 
-const euroToUsd = 1.1;
+// const euroToUsd = 1.1;
 
 //PIPELINE
-const totalDeposit = movements
-  .filter((mov) => mov > 0)
+// const totalDeposit = movements
+//   .filter((mov) => mov > 0)
 
-  //Check Errors
+//   //Check Errors
 
-  // .map((mov, i, arr) => {
-  //   console.log(arr);
-  //   return mov * euroToUsd;
-  // })
+//   // .map((mov, i, arr) => {
+//   //   console.log(arr);
+//   //   return mov * euroToUsd;
+//   // })
 
-  .map((mov) => mov * euroToUsd)
-  .reduce((acc, mov) => acc + mov, 0);
+//   .map((mov) => mov * euroToUsd)
+//   .reduce((acc, mov) => acc + mov, 0);
 
-console.log(totalDeposit);
+// console.log(totalDeposit);
 
 // const checkDogs = function (dogsJulia, dogsKate) {
 //   // const dogsJuliaCorrected = dogsJulia.slice(1, -2);
@@ -570,18 +570,44 @@ console.log(min); */
 
 //Find Method => return only the first element matches the condition
 
-const firstWithdrawal = movements.find((mov) => mov < 0);
+// const firstWithdrawal = movements.find((mov) => mov < 0);
+
+// console.log(movements);
+// console.log(firstWithdrawal);
+
+// console.log(accounts);
+
+// const account = accounts.find((acc) => acc.owner === "Jonas Schmedtmann");
+// console.log(account);
+
+// //for - of
+// let accountt;
+// for (const acc of accounts) {
+//   if (acc.owner === "Jonas Schmedtmann") accountt = acc;
+// }
+
+//The New findLast and findLastIndex Methods
 
 console.log(movements);
-console.log(firstWithdrawal);
 
-console.log(accounts);
+const lastWithdrawal = movements.findLast((mov) => mov < 0);
+console.log(lastWithdrawal);
 
-const account = accounts.find((acc) => acc.owner === "Jonas Schmedtmann");
-console.log(account);
+const latestLargeMovementIndex = movements.findLastIndex(
+  (mov) => Math.abs(mov) > 1000,
+);
+console.log(latestLargeMovementIndex);
+console.log(
+  `Your Latest large movement was ${movements.length - latestLargeMovementIndex} movements ago`,
+);
 
-//for - of
-let accountt;
-for (const acc of accounts) {
-  if (acc.owner === "Jonas Schmedtmann") accountt = acc;
-}
+console.log(movements);
+
+//EQUALITY
+console.log(movements.includes(-130));
+
+//CONDITION
+console.log(movements.some((mov) => mov === -130));
+
+const anyDeposits = movements.some((mov) => mov > 0);
+console.log(anyDeposits);
