@@ -126,7 +126,6 @@ const createUserNames = function (accounts) {
 createUserNames(accounts);
 
 //Updating UI
-
 const updateUI = function (acc) {
   //Display Movements
   displayMovements(acc.movements);
@@ -135,6 +134,7 @@ const updateUI = function (acc) {
   //Display Summary
   calcDisplaySummary(acc);
 };
+
 //Event handler
 let currentAccount;
 
@@ -168,7 +168,6 @@ btnLogin.addEventListener("click", function (e) {
 });
 
 //Transfer
-
 btnTransfer.addEventListener("click", function (e) {
   e.preventDefault();
 
@@ -194,8 +193,27 @@ btnTransfer.addEventListener("click", function (e) {
   }
 });
 
-//Close account
+//Request Loan
+btnLoan.addEventListener("click", function (e) {
+  e.preventDefault();
 
+  const amount = Number(inputLoanAmount.value);
+
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((mov) => mov >= amount * 0.1)
+  ) {
+    //add Movement(loan)
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = "";
+});
+
+//Close account
 btnClose.addEventListener("click", function (e) {
   e.preventDefault();
 
@@ -606,8 +624,20 @@ console.log(movements);
 //EQUALITY
 console.log(movements.includes(-130));
 
-//CONDITION
+//SOME : CONDITION
 console.log(movements.some((mov) => mov === -130));
 
 const anyDeposits = movements.some((mov) => mov > 0);
 console.log(anyDeposits);
+
+//EVERY => return true if all the elements in the array satisfy the condition that we pass in
+console.log(movements.every((mov) => mov > 0));
+console.log(account4.movements.every((mov) => mov > 0));
+
+//Separate Callback
+
+const deposit = (mov) => mov > 0;
+
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
