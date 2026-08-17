@@ -62,10 +62,12 @@ const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
 //DisplayMovements
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
 
     const html = `<div class="movements__row">
@@ -233,6 +235,13 @@ btnClose.addEventListener("click", function (e) {
     containerApp.style.opacity = 0;
   }
   inputClosePin.value = inputCloseUsername.value = "";
+});
+
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -773,3 +782,30 @@ const theHeaviestBreed = Math.max(
 );
 
 console.log(theHeaviestBreed);
+
+//Sort Method
+//Strings
+const owners = ["Jonas", "Zach", "Adam", "Martha"];
+console.log(owners.sort());
+
+//Numbers
+console.log(movements);
+
+//Return < 0 ----> A before B  (Keep Order) -1
+//Return > 0 ----> B before A  (Switch Order) 1
+
+//Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+//Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+movements.sort((a, b) => b - a);
+console.log(movements);
