@@ -836,3 +836,53 @@ console.log(groupedByActivity);
 // const groupedAccounts = Object.groupBy(accounts, (account) => account.type);
 const groupedAccounts = Object.groupBy(accounts, ({ type }) => type);
 console.log(groupedAccounts);
+
+//Programmatically Create And Fill Arrays
+
+const arr1 = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+//Empty array + fill Method
+const x = new Array(7); //Create empty array with the length
+console.log(x);
+//we cant use methods on the empty arrays except fill method
+
+x.fill(1, 3, 5);
+console.log(x);
+
+x.fill(1);
+console.log(x);
+
+arr1.fill(23, 2, 6); //like the slice method final index not included in the array
+console.log(arr1);
+
+//Array.from
+
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+//we can't use Array Method on NodeList we need to convert it first to array using Array.from method or spread operator.
+labelBalance.addEventListener("click", function () {
+  //First Option Array.from Method
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    (el) => Number(el.textContent.replace("€", "")),
+  );
+  console.log(movementsUI);
+
+  //Second Option Spread Operator
+  const movementsUI2 = [...document.querySelectorAll(".movements__value")].map(
+    (el) => Number(el.textContent.replace("€", "")),
+  );
+
+  console.log(movementsUI2);
+});
+
+//DiceRoll Example
+const diceRoll = Array.from({ length: 100 }, () => {
+  return Math.trunc(Math.random() * 6) + 1;
+});
+console.log(diceRoll);
