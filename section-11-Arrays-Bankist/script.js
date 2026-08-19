@@ -881,6 +881,30 @@ labelBalance.addEventListener("click", function () {
   console.log(movementsUI2);
 });
 
+console.log("========================================");
+
+//Non-Destructive Alternatives: toReversed, toSorted, toSpliced, with
+
+//Reverse -> mutate the original array -> Destructive Method
+console.log(movements);
+// const reversedMov = movements.reverse();//mutate the original array
+// const reversedMov = movements.slice().reverse(); //create copy array with slice so we don't mutate the original array
+const reversedMov = movements.toReversed(); //
+console.log(reversedMov);
+console.log(movements);
+
+//toSorted(sort), toSpliced(splice)==> they don't touch the original array and leave it intact
+
+//Destructive way
+// movements[1] = 2000;
+// console.log(movements);
+
+//with method => Non-Destructive to change elements in an array without changing the original one
+const newMovements = movements.with(1, 4000); //with(index,value)
+console.log(newMovements);
+console.log(movements);
+
+console.log("========================================");
 //DiceRoll Example
 const diceRoll = Array.from({ length: 100 }, () => {
   return Math.trunc(Math.random() * 6) + 1;
