@@ -865,21 +865,21 @@ const z = Array.from({ length: 7 }, (_, i) => i + 1);
 console.log(z);
 
 //we can't use Array Method on NodeList we need to convert it first to array using Array.from method or spread operator.
-labelBalance.addEventListener("click", function () {
-  //First Option Array.from Method
-  const movementsUI = Array.from(
-    document.querySelectorAll(".movements__value"),
-    (el) => Number(el.textContent.replace("€", "")),
-  );
-  console.log(movementsUI);
+// labelBalance.addEventListener("click", function () {
+//   //First Option Array.from Method
+//   const movementsUI = Array.from(
+//     document.querySelectorAll(".movements__value"),
+//     (el) => Number(el.textContent.replace("€", "")),
+//   );
+//   console.log(movementsUI);
 
-  //Second Option Spread Operator
-  const movementsUI2 = [...document.querySelectorAll(".movements__value")].map(
-    (el) => Number(el.textContent.replace("€", "")),
-  );
+//   //Second Option Spread Operator
+//   const movementsUI2 = [...document.querySelectorAll(".movements__value")].map(
+//     (el) => Number(el.textContent.replace("€", "")),
+//   );
 
-  console.log(movementsUI2);
-});
+//   console.log(movementsUI2);
+// });
 
 console.log("========================================");
 
@@ -911,6 +911,38 @@ const diceRoll = Array.from({ length: 100 }, () => {
 });
 console.log(diceRoll);
 
+console.log("========================================");
+//Array methods practice
+
+//1.
+const bankDepositsSum = accounts
+  .flatMap((account) => account.movements)
+  .filter((movement) => movement > 0)
+  .reduce((sum, cur) => sum + cur);
+
+console.log(bankDepositsSum);
+
+//2.
+// const numDeposits1000 = accounts
+//   .flatMap((account) => account.movements)
+//   .filter((mov) => mov >= 1000).length;
+
+//using reduce
+const numDeposits1000 = accounts
+  .flatMap((account) => account.movements)
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+
+console.log(numDeposits1000);
+
+// prefixed++ operator
+// let a = 10;
+// console.log(a++); //postfix -> print then add
+
+// console.log(++a); //prefix -> add then print
+// console.log(a);
+
+
+//===================================================================
 // --- which method should we use ---
 
 //1- to mutate original --> add to original(push-unshift) ** remove from original(pop-shift-splice) ** others(reverse-sort-fill)
