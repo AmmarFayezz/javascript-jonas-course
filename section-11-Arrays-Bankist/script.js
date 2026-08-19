@@ -910,3 +910,35 @@ const diceRoll = Array.from({ length: 100 }, () => {
   return Math.trunc(Math.random() * 6) + 1;
 });
 console.log(diceRoll);
+
+// --- which method should we use ---
+
+//1- to mutate original --> add to original(push-unshift) ** remove from original(pop-shift-splice) ** others(reverse-sort-fill)
+
+//2- new array based on original --> same length(map) ** filter using condition(filter) ** take portion(slice) ** with one item replaced(with) ** (flat-flaMap) ** (toSorted-toReversed-toSpliced) ** join two arrays(concat)
+
+//3- do i want an array index --> based on value(indexOf) ** based on test condition(findIndex-findLastIndex)
+
+//4- do i want to retrieve an entire array element? --> based on test condition(find-findLast) ** based on position(at)
+
+//5- know if an array includes a certain element? --> based on value(includes) ** based on test condition(some-every)
+
+//6- maybe i want to get a new string --> based on separator(join)
+
+//7- to transform the array to a new value --> based on accumulator(reduce) -> boil down array to single value of any type (num-boolean-string-array-obj)
+
+//8- to just loop array --> based on callback(forEach) -> doesn't create a new array just loops over it
+
+//--- More Array Tools and Techniques (not array method)---
+
+//grouping an array by categories --> Object.groupBy
+
+//create a new array from scratch --> Array.from() -> we pass desired length and map callback
+
+//create a new array from scratch with n empty positions --> new Array(n)
+
+//join 2 array or more --> [...arr1,...arr2]
+
+//create a new array containing unique values from arr --> [...new Set(arr)]
+
+//create new array containing unique elements that present in both arr1 and arr2 --> [...new Set(arr1).intersection(new Set(arr2))]
